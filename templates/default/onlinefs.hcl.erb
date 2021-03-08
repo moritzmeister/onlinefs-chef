@@ -1,0 +1,18 @@
+services = [
+    {
+        id = "onlinefs/metrics"
+        name = "onlinefs"
+        tags = [
+            "monitoring"
+        ]
+        port = <%= node['onlinefs']['monitoring'] %>
+        check = {
+            id = "onlinefs-check"
+            name = "Health check for Online feature store"
+            http = "http://localhost:<%= node['onlinefs']['monitoring'] %>/metrics"
+            interval = "20s"
+            timeout = "20s"
+            status = "passing"
+        }
+    }
+]

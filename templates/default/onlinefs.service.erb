@@ -1,0 +1,14 @@
+[Unit]
+Description = Online feature store service.
+After = syslog.target network.target remote-fs.target docker.service <%= @deps %>
+Requires = docker.service
+
+[Service]
+ExecStart = /usr/bin/docker run -rm --name %n docker.hops.works/onlinefs:<%= node['onlinefs']['version'] %>
+ExecStop = /usr/bin/docker stop %n 
+
+Restart = on-failure
+RestartSec = 2
+
+[Install]
+WantedBy = multi-user.target
