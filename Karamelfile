@@ -1,0 +1,4 @@
+dependencies:
+  - recipe: onlinefs::default
+    global:
+      -kkafka::default
