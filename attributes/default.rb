@@ -8,8 +8,8 @@ default['onlinefs']['user']                   = "onlinefs"
 default['onlinefs']['group']                  = "onlinefs"
 
 default['onlinefs']['home']                   = "#{node['install']['dir']}/onlinefs" 
-default['onlinefs']['etc']                    = "#{node['install']['home']}/etc" 
-default['onlinefs']['logs']                   = "#{node['install']['home']}/logs" 
+default['onlinefs']['etc']                    = "#{node['onlinefs']['home']}/etc" 
+default['onlinefs']['logs']                   = "#{node['onlinefs']['home']}/logs" 
 
 default['onlinefs']['hopsworks']['email']     = "onlinefs@hopsworks.ai"
 default['onlinefs']['hopsworks']['password']  = "onlinefspw"

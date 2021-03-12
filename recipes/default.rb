@@ -6,6 +6,7 @@ end
 
 user node['onlinefs']['user'] do
   home node['onlinefs']['user-home']
+  gid node['onlinefs']['group'] 
   action :create
   shell "/bin/nologin"
   manage_home true
@@ -34,12 +35,13 @@ kagent_hopsify "Generate x.509" do
 end
 
 # Generate an API key 
+api_key = ""
 
 # Template the configuration file 
 kafka_fqdn = consul_helper.get_service_fqdn("broker.kafka")
 mgm_fqdn = consul_helper.get_service_fqdn("mgm.rondb")
 template "#{node['onlinefs']['etc']}/onlinefs-site.xml" do
-  source "onlinfs-site.xml.erb" 
+  source "onlinefs-site.xml.erb" 
   owner node['onlinefs']['user']
   group node['onlinefs']['group']
   mode 0750
@@ -50,12 +52,19 @@ template "#{node['onlinefs']['etc']}/onlinefs-site.xml" do
            })
 end
 
+template "#{node['onlinefs']['etc']}/log4j.properties" do
+  source "log4j.properties.erb" 
+  owner node['onlinefs']['user']
+  group node['onlinefs']['group']
+  mode 0750
+end
+
 # Download and load the Docker image
 image_url = node['onlinefs']['download_url']
 base_filename = File.basename(image_url)
 remote_file "#{Chef::Config['file_cache_path']}/#{base_filename}" do
   source image_url
-  action :create_if_missing
+  action :create
 end
 
 # Load the Docker image
@@ -76,6 +85,12 @@ else
   systemd_script = "/lib/systemd/system/#{service_name}.service"
 end
 
+service service_name do
+  provider Chef::Provider::Service::Systemd
+  supports :restart => true, :stop => true, :start => true, :status => true
+  action :nothing
+end
+
 template systemd_script do 
   source "#{service_name}.service.erb"
   owner "root"
@@ -85,6 +100,9 @@ template systemd_script do
   if node['services']['enabled'] == "true"
     notifies :enable, "service[#{service_name}]"
   end
+  variables({
+    :crypto_dir => crypto_dir
+  })
 end
 
 kagent_config "#{service_name}" do

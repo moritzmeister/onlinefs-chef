@@ -6,9 +6,9 @@
 
   <kafka>
     <bootstrapServers><%= @kafka_fqdn %>:<%= node['kkafka']['broker']['port'] %></bootstrapServers>
-    <trustStoreLocation>/certs/onlinefs_tstore.jks</trustStoreLocation>
-    <keyStoreLocation>/certs/onlinefs_kstore.jks</keyStoreLocation>
-    <keyLocation>/certs/onlinefs_passwd</keyPassword>
+    <trustStoreLocation>/certs/onlinefs__tstore.jks</trustStoreLocation>
+    <keyStoreLocation>/certs/onlinefs__kstore.jks</keyStoreLocation>
+    <keyLocation>/certs/onlinefs__passwd</keyLocation>
   </kafka>
 
   <hopsworks>

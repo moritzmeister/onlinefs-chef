@@ -4,10 +4,10 @@ After = syslog.target network.target remote-fs.target docker.service <%= @deps %
 Requires = docker.service
 
 [Service]
-ExecStart = /usr/bin/docker run -rm --name %n \
-           -v <%= default['onlinefs']['home'] %>:/onlinefs \
+ExecStart = /usr/bin/docker run --rm --name %n \
+           -v <%= node['onlinefs']['home'] %>:/onlinefs \
            -v <%= @crypto_dir %>:/certs \
-           -e ONLINEFS_HOME=/onlinefs
+           -e ONLINEFS_HOME=/onlinefs \
            docker.hops.works/onlinefs:<%= node['onlinefs']['version'] %>
 ExecStop = /usr/bin/docker stop %n 
 
