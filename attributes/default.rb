@@ -13,5 +13,6 @@ default['onlinefs']['logs']                   = "#{node['onlinefs']['home']}/log
 
 default['onlinefs']['hopsworks']['email']     = "onlinefs@hopsworks.ai"
 default['onlinefs']['hopsworks']['password']  = "onlinefspw"
+default['onlinefs']['hopsworks']['salt']      = "0uzheUUS/BzlyAjNTFhjZ0Ydnx4fxudPgrTfv5BGQZZp6/3RhNMgkchtcJVaux/kzAXZbgccz2icvjMtO4HCbA=="
 
 default['onlinefs']['monitoring']             = 12800
