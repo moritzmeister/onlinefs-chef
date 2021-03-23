@@ -101,6 +101,14 @@ ruby_block 'generate-api-key' do
   end
 end
 
+# write api-key to token file
+file node['onlinefs']['token'] do
+  content "#{api_key}"
+  mode 0750
+  owner node['onlinefs']['user']
+  group node['onlinefs']['group']
+end
+
 # Template the configuration file
 kafka_fqdn = consul_helper.get_service_fqdn("broker.kafka")
 mgm_fqdn = consul_helper.get_service_fqdn("mgm.rondb")
@@ -109,13 +117,12 @@ template "#{node['onlinefs']['etc']}/onlinefs-site.xml" do
   owner node['onlinefs']['user']
   group node['onlinefs']['group']
   mode 0750
-  variables( lazy {
+  variables(
     {
       :kafka_fqdn => kafka_fqdn,
-      :mgm_fqdn => mgm_fqdn,
-      :api_key => api_key
+      :mgm_fqdn => mgm_fqdn
     }
-  })
+  )
 end
 
 template "#{node['onlinefs']['etc']}/log4j.properties" do

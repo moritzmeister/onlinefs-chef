@@ -10,6 +10,7 @@ default['onlinefs']['group']                  = "onlinefs"
 default['onlinefs']['home']                   = "#{node['install']['dir']}/onlinefs"
 default['onlinefs']['etc']                    = "#{node['onlinefs']['home']}/etc"
 default['onlinefs']['logs']                   = "#{node['onlinefs']['home']}/logs"
+default['onlinefs']['token']                  = "#{node['onlinefs']['etc']}/token"
 
 default['onlinefs']['hopsworks']['email']     = "onlinefs@hopsworks.ai"
 default['onlinefs']['hopsworks']['password']  = "onlinefspw"
