@@ -35,11 +35,13 @@ kagent_hopsify "Generate x.509" do
 end
 
 # Generate an API key
-ruby_block 'fetch-api-key' do
+api_key = nil
+ruby_block 'generate-api-key' do
   block do
     require 'net/https'
     require 'http-cookie'
     require 'json'
+    require 'securerandom'
 
     hopsworks_fqdn = consul_helper.get_service_fqdn("hopsworks.glassfish")
     hopsworks_endpoint = "https://#{hopsworks_fqdn}:#{node['hopsworks']['internal']['port']}"
@@ -52,9 +54,8 @@ ruby_block 'fetch-api-key' do
     }
 
     api_key_params = {
-      :name => "onlinefs",
-      # check with fabio which scopes are needed
-      :scope => "FEATURESTORE,KAFKA,PROJECT"
+      :name => "onlinefs_" + SecureRandom.hex(12),
+      :scope => "KAFKA,PROJECT"
     }
 
     http = Net::HTTP.new(url.host, url.port)
@@ -87,7 +88,7 @@ ruby_block 'fetch-api-key' do
 
           if ( response.is_a? (Net::HTTPSuccess))
             json_response = ::JSON.parse(response.body)
-            api_key = json_response['signedCert']
+            api_key = json_response['key']
           else
             puts response.body
             raise "Error creating onlinefs api-key"
