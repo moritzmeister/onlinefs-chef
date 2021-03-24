@@ -78,14 +78,14 @@ ruby_block 'generate-api-key' do
 
       if( response.is_a?( Net::HTTPSuccess ) )
           # your request was successful
-          puts "The Response -> #{response.body}"
+          puts "Onlinefs login successful: -> #{response.body}"
 
           response.get_fields('Set-Cookie').each do |value|
             jar.parse(value, url)
           end
 
+          api_key_url.query = URI.encode_www_form(api_key_params)
           request = Net::HTTP::Post.new(api_key_url)
-          request.set_form_data(api_key_params, '&')
           request['Content-Type'] = "application/json"
           request['Cookie'] = ::HTTP::Cookie.cookie_value(jar.cookies(api_key_url))
           request['Authorization'] = response['Authorization']
@@ -96,11 +96,11 @@ ruby_block 'generate-api-key' do
             api_key = json_response['key']
           else
             puts response.body
-            raise "Error creating onlinefs api-key"
+            raise "Error creating onlinefs api-key: #{response.uri}"
           end
       else
           puts response.body
-          raise "Error logging in"
+          raise "Error onlinefs login"
       end
     end
   end
