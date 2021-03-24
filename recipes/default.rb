@@ -108,7 +108,7 @@ end
 
 # write api-key to token file
 file node['onlinefs']['token'] do
-  content lazy {"#{api_key}"}
+  content lazy {api_key}
   mode 0750
   owner node['onlinefs']['user']
   group node['onlinefs']['group']

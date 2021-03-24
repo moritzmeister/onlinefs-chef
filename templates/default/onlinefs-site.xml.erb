@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <onlinefs>
-  <irondb>
+  <rondb>
     <connectionString><%= @mgm_fqdn %>:<%= node['ndb']['mgmd']['port'] %></connectionString>
-  </irondb>
+  </rondb>
 
   <kafka>
     <bootstrapServers><%= @kafka_fqdn %>:<%= node['kkafka']['broker']['port'] %></bootstrapServers>
