@@ -1,5 +1,6 @@
 include_attribute "kkafka"
 include_attribute "ndb"
+include_attribute "hopsworks"
 
 default['onlinefs']['version']                = 1.0
 default['onlinefs']['download_url']           = "#{node['download_url']}/onlinefs/#{node['onlinefs']['version']}/onlinefs.tgz"
