@@ -44,6 +44,11 @@ ruby_block 'generate-api-key' do
     require 'securerandom'
 
     hopsworks_fqdn = consul_helper.get_service_fqdn("hopsworks.glassfish")
+    _, hopsworks_port = consul_helper.get_service("glassfish", ["http", "hopsworks"])
+    if hopsworks_port.nil?
+      raise "Could not get Hopsworks port from local Consul agent. Verify Hopsworks is running with service name: glassfish and tags: [http, hopsworks]"
+    end
+
     hopsworks_endpoint = "https://#{hopsworks_fqdn}:#{node['hopsworks']['internal']['port']}"
     url = URI.parse("#{hopsworks_endpoint}/hopsworks-api/api/auth/service")
     api_key_url = URI.parse("#{hopsworks_endpoint}/hopsworks-api/api/users/apiKey")
