@@ -60,7 +60,7 @@ ruby_block 'generate-api-key' do
 
     api_key_params = {
       :name => "onlinefs_" + SecureRandom.hex(12),
-      :scope => "KAFKA,PROJECT"
+      :scope => "KAFKA"
     }
 
     http = Net::HTTP.new(url.host, url.port)
