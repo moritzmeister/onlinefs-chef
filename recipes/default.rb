@@ -26,10 +26,14 @@ end
 }
 
 # Generate a certificate
+instance_id = private_recipe_ips("onlinefs", "default").sort.find_index(my_private_ip())
+service_fqdn = consul_helper.get_service_fqdn("onlinefs")
+
 crypto_dir = x509_helper.get_crypto_dir(node['onlinefs']['user'])
 kagent_hopsify "Generate x.509" do
   user node['onlinefs']['user']
   crypto_directory crypto_dir
+  common_name "#{instance_id}.#{service_fqdn}"
   action :generate_x509
   not_if { node["kagent"]["enabled"] == "false" }
 end
