@@ -2,6 +2,7 @@
 <onlinefs>
   <rondb>
     <connectionString><%= @mgm_fqdn %>:<%= node['ndb']['mgmd']['port'] %></connectionString>
+    <batchSize>300</batchSize>
   </rondb>
 
   <kafka>

@@ -1,7 +1,7 @@
 include_attribute "kkafka"
 include_attribute "ndb"
 
-default['onlinefs']['version']                = 1.1
+default['onlinefs']['version']                = "1.2-SNAPSHOT"
 default['onlinefs']['download_url']           = "#{node['download_url']}/onlinefs/#{node['onlinefs']['version']}/onlinefs.tgz"
 
 default['onlinefs']['user']                   = "onlinefs"
