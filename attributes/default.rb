@@ -16,3 +16,5 @@ default['onlinefs']['hopsworks']['email']     = "onlinefs@hopsworks.ai"
 default['onlinefs']['hopsworks']['password']  = "onlinefspw"
 
 default['onlinefs']['monitoring']             = 12800
+
+default['onlinefs']['service']['thread_number'] = 10
