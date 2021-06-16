@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <onlinefs>
+  <service>
+    <threadNumber><%= node['onlinefs']['service']['thread_number'] %></threadNumber>
+  </service>
+
   <rondb>
     <connectionString><%= @mgm_fqdn %>:<%= node['ndb']['mgmd']['port'] %></connectionString>
     <batchSize>300</batchSize>
@@ -17,4 +21,3 @@
   </hopsworks>
 
 </onlinefs>
-
