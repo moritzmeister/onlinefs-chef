@@ -16,3 +16,7 @@ depends 'consul'
 attribute "onlinefs/service/thread_number",
           :description => "number of threads reading from kafka and writing to rondb",
           :type => "string"
+
+attribute "onlinefs/monitoring",
+          :description => "Port on which the monitoring page is available",
+          :type => "string"
