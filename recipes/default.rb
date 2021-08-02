@@ -15,14 +15,62 @@ user node['onlinefs']['user'] do
   not_if { node['install']['external_users'].casecmp("true") == 0 }
 end
 
-# Create the directories for configuration files and logs
-['home', 'etc', 'logs'].each {|dir|
-   directory node['onlinefs'][dir] do
-     owner node['onlinefs']['user']
-     group node['onlinefs']['group']
-     mode "0750"
-     action :create
-   end
+directory node['onlinefs']['data_volume']['root_dir'] do
+  owner node['onlinefs']['user']
+  group node['onlinefs']['group']
+  mode "0750"
+  action :create
+end
+
+directory node['onlinefs']['data_volume']['etc_dir'] do
+  owner node['onlinefs']['user']
+  group node['onlinefs']['group']
+  mode "0750"
+  action :create
+end
+
+directory node['onlinefs']['data_volume']['logs_dir'] do
+  owner node['onlinefs']['user']
+  group node['onlinefs']['group']
+  mode "0750"
+  action :create
+end
+
+['etc_dir', 'logs_dir'].each {|dir|
+  directory node['onlinefs']['data_volume'][dir] do
+    owner node['onlinefs']['user']
+    group node['onlinefs']['group']
+    mode "0750"
+    action :create
+  end
+}
+
+directory node['onlinefs']['home'] do
+  owner node['onlinefs']['user']
+  group node['onlinefs']['group']
+  mode "0750"
+  action :create
+end
+
+['etc', 'logs'].each {|dir|
+  bash "Move onlinefs #{dir} to data volume" do
+    user 'root'
+    code <<-EOH
+      set -e
+      mv -f #{node['onlinefs'][dir]}/* #{node['onlinefs']['data_volume']["#{dir}_dir"]}
+      rm -rf #{node['onlinefs'][dir]}
+    EOH
+    only_if { conda_helpers.is_upgrade }
+    only_if { File.directory?(node['onlinefs'][dir])}
+    not_if { File.symlink?(node['onlinefs'][dir])}
+  end
+
+  link node['onlinefs'][dir] do
+    owner node['onlinefs']['user']
+    group node['onlinefs']['group']
+    mode "0750"
+    to node['onlinefs']['data_volume']["#{dir}_dir"]
+  end
 }
 
 # Generate a certificate

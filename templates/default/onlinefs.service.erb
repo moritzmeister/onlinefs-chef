@@ -6,6 +6,7 @@ Requires = docker.service
 [Service]
 ExecStart = /usr/bin/docker run --rm --name %n \
            -v <%= node['onlinefs']['home'] %>:/onlinefs \
+           -v <%= node['onlinefs']['data_volume']['root_dir']%>:<%= node['onlinefs']['data_volume']['root_dir']%> \
            -v <%= @crypto_dir %>:/certs \
            -p <%= node['onlinefs']['monitoring'] %>:<%= node['onlinefs']['monitoring'] %> \
            -e ONLINEFS_HOME=/onlinefs \

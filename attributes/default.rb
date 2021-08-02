@@ -12,6 +12,11 @@ default['onlinefs']['etc']                    = "#{node['onlinefs']['home']}/etc
 default['onlinefs']['logs']                   = "#{node['onlinefs']['home']}/logs"
 default['onlinefs']['token']                  = "#{node['onlinefs']['etc']}/token"
 
+# Data volume directories
+default['onlinefs']['data_volume']['root_dir']  = "#{node['data']['dir']}/onlinefs"
+default['onlinefs']['data_volume']['etc_dir']   = "#{node['onlinefs']['data_volume']['root_dir']}/etc"
+default['onlinefs']['data_volume']['logs_dir']  = "#{node['onlinefs']['data_volume']['root_dir']}/logs"
+
 default['onlinefs']['hopsworks']['email']     = "onlinefs@hopsworks.ai"
 default['onlinefs']['hopsworks']['password']  = "onlinefspw"
 
