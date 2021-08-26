@@ -5,7 +5,9 @@ default['onlinefs']['version']                = "1.2"
 default['onlinefs']['download_url']           = "#{node['download_url']}/onlinefs/#{node['onlinefs']['version']}/onlinefs.tgz"
 
 default['onlinefs']['user']                   = "onlinefs"
+default['onlinefs']['user_id']                = '1521'
 default['onlinefs']['group']                  = "onlinefs"
+default['onlinefs']['group_id']               = '1516'
 
 default['onlinefs']['home']                   = "#{node['install']['dir']}/onlinefs"
 default['onlinefs']['etc']                    = "#{node['onlinefs']['home']}/etc"

@@ -1,4 +1,5 @@
 group node['onlinefs']['group'] do
+  gid node['onlinefs']['group_id']
   action :create
   not_if "getent group #{node['onlinefs']['group']}"
   not_if { node['install']['external_users'].casecmp("true") == 0 }
@@ -6,6 +7,7 @@ end
 
 user node['onlinefs']['user'] do
   home node['onlinefs']['user-home']
+  uid node['onlinefs']['user_id']
   gid node['onlinefs']['group']
   action :create
   shell "/bin/nologin"
