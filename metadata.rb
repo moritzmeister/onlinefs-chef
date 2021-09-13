@@ -10,6 +10,7 @@ recipe "onlinefs::default", "Configures the Hopsworks online feature store servi
 
 depends 'kkafka'
 depends 'ndb'
+depends 'hops'
 depends 'kagent'
 depends 'consul'
 
