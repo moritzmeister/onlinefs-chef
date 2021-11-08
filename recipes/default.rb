@@ -247,6 +247,14 @@ service service_name do
   action :nothing
 end
 
+local_systemd_dependencies = ""
+if service_discovery_enabled()
+  local_systemd_dependencies += "consul.service"
+end
+if exists_local("kafka", "default")
+  local_systemd_dependencies += " kafka.service"
+end
+
 template systemd_script do
   source "#{service_name}.service.erb"
   owner "root"
@@ -257,7 +265,9 @@ template systemd_script do
     notifies :enable, "service[#{service_name}]"
   end
   variables({
-    :crypto_dir => crypto_dir
+    :crypto_dir => crypto_dir,
+    :kafka_fqdn => kafka_fqdn,
+    :local_dependencies => local_systemd_dependencies
   })
 end
 
