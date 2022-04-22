@@ -6,7 +6,9 @@
 
   <rondb>
     <connectionString><%= @mgm_fqdn %>:<%= node['ndb']['mgmd']['port'] %></connectionString>
-    <batchSize>300</batchSize>
+    <batchSize><%= node['onlinefs']['rondb']['batch_size'] %></batchSize>
+    <poolSize><%= node['onlinefs']['rondb']['pool_size'] %></poolSize>
+    <maxTransactions><%= node['onlinefs']['rondb']['max_transactions'] %></maxTransactions>
   </rondb>
 
   <kafka>

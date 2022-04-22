@@ -37,3 +37,15 @@ attribute "onlinefs/service/thread_number",
 attribute "onlinefs/monitoring",
           :description => "Port on which the monitoring page is available",
           :type => "string"
+
+attribute "onlinefs/rondb/batch_size",
+          :description => "batch size to commit to rondb (Default: 300)",
+          :type => "string"
+
+attribute "onlinefs/rondb/max_transactions",
+          :description => "max number of concurrent clusterj transactions (Default: 1024)",
+          :type => "string"
+
+attribute "onlinefs/rondb/pool_size",
+          :description => "Size of the connection pool for each session factory (Default: 1)",
+          :type => "string"

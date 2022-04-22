@@ -2,7 +2,7 @@ include_attribute "kkafka"
 include_attribute "ndb"
 include_attribute "hops"
 
-default['onlinefs']['version']                = "1.2"
+default['onlinefs']['version']                = "1.3"
 default['onlinefs']['download_url']           = "#{node['download_url']}/onlinefs/#{node['onlinefs']['version']}/onlinefs.tgz"
 
 default['onlinefs']['user']                   = "onlinefs"
@@ -26,3 +26,7 @@ default['onlinefs']['hopsworks']['password']  = "onlinefspw"
 default['onlinefs']['monitoring']             = 12800
 
 default['onlinefs']['service']['thread_number'] = 10
+
+default['onlinefs']['rondb']['batch_size']       = 300
+default['onlinefs']['rondb']['max_transactions'] = 1024
+default['onlinefs']['rondb']['pool_size']        = 1
