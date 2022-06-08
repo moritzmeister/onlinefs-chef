@@ -49,3 +49,7 @@ attribute "onlinefs/rondb/max_transactions",
 attribute "onlinefs/rondb/pool_size",
           :description => "Size of the connection pool for each session factory (Default: 1)",
           :type => "string"
+
+attribute "onlinefs/download_url",
+          :description => "Download url for the onlinefs.tgz binaries",
+          :type => "string"
