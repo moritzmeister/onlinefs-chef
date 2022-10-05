@@ -224,12 +224,17 @@ remote_file "#{Chef::Config['file_cache_path']}/#{base_filename}" do
 end
 
 # Load the Docker image
+registry_image = "#{consul_helper.get_service_fqdn("registry")}:#{node['hops']['docker']['registry']['port']}/onlinefs:#{node['onlinefs']['version']}"
+image_name = "docker.hops.works/onlinefs:#{node['onlinefs']['version']}"
 bash "import_image" do
   user "root"
   code <<-EOF
+    set -e
     docker load -i #{Chef::Config['file_cache_path']}/#{base_filename}
+    docker tag #{image_name} #{registry_image}
+    docker push #{registry_image}
   EOF
-  not_if "docker image inspect docker.hops.works/onlinefs:#{node['onlinefs']['version']}"
+  not_if "docker image inspect #{registry_image}"
 end
 
 # Add Systemd unit file
@@ -267,6 +272,7 @@ template systemd_script do
   variables({
     :crypto_dir => crypto_dir,
     :kafka_fqdn => kafka_fqdn,
+    :image_name => registry_image,
     :local_dependencies => local_systemd_dependencies
   })
 end
