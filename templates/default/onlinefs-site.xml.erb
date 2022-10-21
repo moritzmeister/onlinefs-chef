@@ -13,13 +13,17 @@
 
   <kafka>
     <bootstrapServers><%= @kafka_fqdn %>:<%= node['kkafka']['broker']['port'] %></bootstrapServers>
-    <trustStoreLocation>/certs/onlinefs__tstore.jks</trustStoreLocation>
-    <keyStoreLocation>/certs/onlinefs__kstore.jks</keyStoreLocation>
-    <keyLocation>/certs/onlinefs__passwd</keyLocation>
+    <trustStoreLocation>/certs/<%= node['onlinefs']['user'] %>__tstore.jks</trustStoreLocation>
+    <keyStoreLocation>/certs/<%= node['onlinefs']['user'] %>__kstore.jks</keyStoreLocation>
+    <keyLocation>/certs/<%= node['onlinefs']['user'] %>__passwd</keyLocation>
   </kafka>
 
   <hopsworks>
     <tokenLocation>/onlinefs/etc/token</tokenLocation>
   </hopsworks>
+
+  <metrics>
+    <port><%= node['onlinefs']['monitoring'] %></port>
+  </metrics>
 
 </onlinefs>
