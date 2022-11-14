@@ -2,12 +2,16 @@
 <onlinefs>
   <service>
     <threadNumber><%= node['onlinefs']['service']['thread_number'] %></threadNumber>
+    <getSessionRetrySleepMs><%= node['onlinefs']['service']['get_session_retry_sleep_ms'] %></getSessionRetrySleepMs>
   </service>
 
   <rondb>
     <connectionString><%= @mgm_fqdn %>:<%= node['ndb']['mgmd']['port'] %></connectionString>
     <batchSize><%= node['onlinefs']['rondb']['batch_size'] %></batchSize>
     <poolSize><%= node['onlinefs']['rondb']['pool_size'] %></poolSize>
+    <maxCachedSessions><%= node['onlinefs']['rondb']['max_cached_sessions'] %></maxCachedSessions>
+    <maxCachedInstances><%= node['onlinefs']['rondb']['max_cached_instances'] %></maxCachedInstances>
+    <reconnectTimeout><%= node['onlinefs']['rondb']['reconnect_timeout'] %></reconnectTimeout>
     <maxTransactions><%= node['onlinefs']['rondb']['max_transactions'] %></maxTransactions>
   </rondb>
 
